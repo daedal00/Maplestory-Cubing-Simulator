@@ -9,3 +9,9 @@ About my *to-do list*:
 
 An example of text with **bold** and *italic* fonts.  
 
+#User Story
+
+- As a user, I want to be able to add and remove tasks
+- As a user, I want to be able to view completed tasks
+- As a user, I want to be able to mark a task complete
+- As a user, I want to be able to delete tasks that I don't need anymore
