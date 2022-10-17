@@ -24,9 +24,11 @@ class CubingSimulatorTest {
     @Test
     public void testCubeReroll(){
         assertEquals(3, c1.getSize());
+        Cubes c3 = c1;
+        assertEquals(c1, c3);
+        c3 = new Cubes();
         c1.rerollCube();
-        assertEquals(3, c1.getSize());
-        assertNotEquals(c1, c2);
+        assertNotEquals(c1, c3);
     }
 
     @Test
@@ -49,6 +51,7 @@ class CubingSimulatorTest {
         eq1.saveEquipment(e2);
         eq1.saveCube(c2);
         assertEquals(2, eq1.getSize());
+        eq1.printEquipmentList();
     }
 
 }

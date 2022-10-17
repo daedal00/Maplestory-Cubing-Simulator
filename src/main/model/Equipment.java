@@ -1,5 +1,6 @@
 package model;
 
+// Equipment class that stores equipment data (flames) as well as equipment name
 public class Equipment {
     private int strength;
     private int intelligence;
@@ -17,26 +18,44 @@ public class Equipment {
         this.name = name;
     }
 
+    // Requires:
+    // Modifies:
+    // Effects:
     public int getIntelligence() {
         return intelligence;
     }
 
+    // Requires:
+    // Modifies:
+    // Effects:
     public int getLuck() {
         return luck;
     }
 
+    // Requires:
+    // Modifies:
+    // Effects:
     public int getDexterity() {
         return dexterity;
     }
 
+    // Requires:
+    // Modifies:
+    // Effects:
     public int getStrength() {
         return strength;
     }
 
+    // Requires:
+    // Modifies:
+    // Effects:
     public String getName() {
         return name;
     }
 
+    // Requires:
+    // Modifies:
+    // Effects:
     public void printEquipment() {
         System.out.println("Dex = " + getDexterity());
         System.out.println("Str = " + getStrength());
@@ -44,6 +63,9 @@ public class Equipment {
         System.out.println("Luk = " + getLuck());
     }
 
+    // Requires:
+    // Modifies:
+    // Effects:
     public void rerollFlame() {
         int min = 10;
         int max = 150;
