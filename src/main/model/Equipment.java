@@ -18,44 +18,32 @@ public class Equipment {
         this.name = name;
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: returns intelligence value
     public int getIntelligence() {
         return intelligence;
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: returns luck value
     public int getLuck() {
         return luck;
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: returns dexterity value
     public int getDexterity() {
         return dexterity;
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: returns strength value
     public int getStrength() {
         return strength;
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: returns equipment name
     public String getName() {
         return name;
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: prints equipment dex, strength, int, luk value
     public void printEquipment() {
         System.out.println("Dex = " + getDexterity());
         System.out.println("Str = " + getStrength());
@@ -63,9 +51,9 @@ public class Equipment {
         System.out.println("Luk = " + getLuck());
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Requires: equipment
+    // Modifies: equipment
+    // Effects: reroll the stats (flames) of the equipment with new randomly generated ones within the min and max
     public void rerollFlame() {
         int min = 10;
         int max = 150;

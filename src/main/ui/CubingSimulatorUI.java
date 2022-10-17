@@ -97,6 +97,6 @@ public class CubingSimulatorUI {
 
     private void printEquipmentList() {
         System.out.println("Equipment List:\n");
-        list.printEquipmentList();
+        list.printList();
     }
 }

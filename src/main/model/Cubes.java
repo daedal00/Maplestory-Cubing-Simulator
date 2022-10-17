@@ -28,43 +28,33 @@ public class Cubes {
         setCubeValue();
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: returns cube names list size
     public int getSize() {
         return cubeNames.size();
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: generates random number within 0-3
     public int getRandomListNumber() {
         Random rand = new Random();
         int upperbound = 4;
         return rand.nextInt(upperbound - 1);
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: Sets 3 random names from cube names to cube
     public void setCubeName() {
         for (int i = 0; i < 3; i++) {
             cubeNames.add(defaultCubeNames.get(getRandomListNumber()));
         }
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: sets 3 random values from cube values to cube
     public void setCubeValue() {
         for (int i = 0; i < 3; i++) {
             cubeValues.add(defaultCubeValues.get(getRandomListNumber()));
         }
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: prints the cube with its new 3 names with corresponding values
     public void printCube() {
         for (int i = 0; i < 3; i++) {
             System.out.println(cubeNames.get(i));
@@ -72,9 +62,9 @@ public class Cubes {
         }
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Requires: cube with 3 names and values
+    // Modifies: cube
+    // Effects: creates and replaces cube object with new randomly generated cube data values
     public void rerollCube() {
         for (int i = 0; i < 3; i++) {
             cubeNames.add(defaultCubeNames.get(getRandomListNumber()));
@@ -86,18 +76,14 @@ public class Cubes {
         removePreviousValues();
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: Removes all previous cube names
     public void removePreviousNames() {
         cubeNames.remove(0);
         cubeNames.remove(1);
         cubeNames.remove(2);
     }
 
-    // Requires:
-    // Modifies:
-    // Effects:
+    // Effects: Removes all previous cube values
     public void removePreviousValues() {
         cubeValues.remove(0);
         cubeValues.remove(1);

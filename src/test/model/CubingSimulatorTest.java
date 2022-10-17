@@ -51,7 +51,7 @@ class CubingSimulatorTest {
         eq1.saveEquipment(e2);
         eq1.saveCube(c2);
         assertEquals(2, eq1.getSize());
-        eq1.printEquipmentList();
+        eq1.printList();
 
         Equipment e3 = new Equipment("Pants");
         eq1.replaceEquipment(e3, 1);
