@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Equipment class that stores equipment data (flames) as well as equipment name
 public class Equipment {
     private int strength;
@@ -16,6 +19,15 @@ public class Equipment {
         luck = (int) Math.floor(Math.random() * (max - min + 1) + min);
         dexterity = (int) Math.floor(Math.random() * (max - min + 1) + min);
         this.name = name;
+    }
+
+    public Equipment(String name, int strength, int intelligence, int luck, int dexterity) {
+        this.strength = strength;
+        this.intelligence = intelligence;
+        this.luck = luck;
+        this.dexterity = dexterity;
+        this.name = name;
+
     }
 
     // Effects: returns intelligence value
@@ -50,6 +62,7 @@ public class Equipment {
         System.out.println("Int = " + getIntelligence());
         System.out.println("Luk = " + getLuck());
     }
+
 
     // Requires: equipment
     // Modifies: equipment

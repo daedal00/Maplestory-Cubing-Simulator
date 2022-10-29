@@ -1,31 +1,56 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 // Cubes class that stores 3 random cube names and cube values
 public class Cubes {
-    private final ArrayList<String> defaultCubeNames;
-    private final ArrayList<Integer> defaultCubeValues;
-    private final ArrayList<String> cubeNames;
+    private final ArrayList<String> defaultCubeNames = new ArrayList<>(
+            Arrays.asList("Str",
+                    "Dex",
+                    "Luk",
+                    "Int"));
+    private final ArrayList<Integer> defaultCubeValues = new ArrayList<>(
+            Arrays.asList(3,
+                    6,
+                    9,
+                    12));
+
+    public ArrayList<String> getCubeNames() {
+        return cubeNames;
+    }
+
+    private ArrayList<String> cubeNames;
+
+    public ArrayList<Integer> getCubeValues() {
+        return cubeValues;
+    }
+
     private final ArrayList<Integer> cubeValues;
 
     public Cubes() {
-        defaultCubeNames = new ArrayList<>(
-                Arrays.asList("Str",
-                        "Dex",
-                        "Luk",
-                        "Int"));
-        defaultCubeValues = new ArrayList<>(
-                Arrays.asList(3,
-                        6,
-                        9,
-                        12));
         cubeNames = new ArrayList<>();
         cubeValues = new ArrayList<>();
         setCubeName();
         setCubeValue();
+    }
+
+    public Cubes(String name1, Integer int1, String name2, Integer int2, String name3, Integer int3) {
+
+        cubeNames = new ArrayList<>();
+        cubeValues = new ArrayList<>();
+        cubeNames.add(name1);
+        cubeNames.add(name2);
+        cubeNames.add(name3);
+        cubeValues.add(int1);
+        cubeValues.add(int2);
+        cubeValues.add(int3);
     }
 
     // Effects: returns cube names list size
@@ -42,9 +67,11 @@ public class Cubes {
 
     // Effects: Sets 3 random names from cube names to cube
     public void setCubeName() {
-        for (int i = 0; i < 3; i++) {
-            cubeNames.add(defaultCubeNames.get(getRandomListNumber()));
-        }
+        ArrayList<String> tempNames = defaultCubeNames;
+        tempNames.remove(getRandomListNumber());
+
+        cubeNames = tempNames;
+
     }
 
     // Effects: sets 3 random values from cube values to cube
@@ -89,5 +116,6 @@ public class Cubes {
         cubeValues.remove(1);
         cubeValues.remove(2);
     }
+
 }
 

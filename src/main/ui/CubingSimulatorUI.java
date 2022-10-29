@@ -1,8 +1,15 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class CubingSimulatorUI {
     private Scanner input;
@@ -14,12 +21,18 @@ public class CubingSimulatorUI {
 
     private void runCubingSimulator() {
         boolean keepRunning = true;
-        int userAnswer = 0;
+        int userAnswer;
         init();
+        System.out.println("Would you like to load from a file?\n 1. Yes \n 2. No\n");
+        userAnswer = input.nextInt();
+        if (userAnswer == 1) {
+            cubeReader();
+        }
         while (keepRunning) {
             displayMenu();
             userAnswer = input.nextInt();
             if (userAnswer == 7) {
+                cubeWriter();
                 keepRunning = false;
             } else {
                 processAnswer(userAnswer);
@@ -28,6 +41,26 @@ public class CubingSimulatorUI {
         System.out.println("Done!");
     }
 
+
+    private void cubeWriter() {
+        JsonWriter writer = new JsonWriter("./data/testWriterGeneralEquipmentList.json");
+        try {
+            writer.open();
+            writer.write(list);
+            writer.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Couldn't save file");
+        }
+    }
+
+    private void cubeReader() {
+        JsonReader reader = new JsonReader("./data/testWriterGeneralEquipmentList.json");
+        try {
+            this.list = reader.read();
+        } catch (IOException e) {
+            System.out.println("Couldn't read from file");
+        }
+    }
 
     private void processAnswer(int userAnswer) {
         if (userAnswer == 1) {
@@ -53,7 +86,7 @@ public class CubingSimulatorUI {
     private void displayMenu() {
         System.out.println("Would you like to \n1) add equipment "
                 + "\n2) remove equipment \n3) reroll flame (equipment) stats \n4) reroll cube stats"
-                + "\n6) view equipment \n7) quit");
+                + "\n6) view equipment \n7) save and quit");
 
     }
 

@@ -1,10 +1,23 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Creates array list that contains equipment and cube objects
 public class List {
+    public ArrayList<Equipment> getEquipmentList() {
+        return equipmentList;
+    }
+
     private final ArrayList<Equipment> equipmentList = new ArrayList<>();
+
+    public ArrayList<Cubes> getCubeList() {
+        return cubeList;
+    }
+
     private final ArrayList<Cubes> cubeList = new ArrayList<>();
     Cubes currentCube;
     Equipment currentEquipment;
@@ -75,5 +88,33 @@ public class List {
     // Effects: returns cube at index i in cube list
     public Cubes getCube(int i) {
         return cubeList.get(i - 1);
+    }
+
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        JSONArray equipList = new JSONArray();
+        JSONArray cubeArrayList = new JSONArray();
+        for (Equipment e : equipmentList) {
+            JSONObject equipment = new JSONObject();
+            equipment.put("Name", e.getName());
+            equipment.put("Strength", e.getStrength());
+            equipment.put("Luck", e.getLuck());
+            equipment.put("Dexterity", e.getDexterity());
+            equipment.put("Intelligence", e.getIntelligence());
+            equipList.put(equipment);
+        }
+        for (Cubes c : cubeList) {
+            JSONObject cube = new JSONObject();
+            for (int i = 0; i < 3; i++) {
+                cube.put(c.getCubeNames().get(i), c.getCubeValues().get(i));
+            }
+            cubeArrayList.put(cube);
+        }
+        json.put("equipment", equipList);
+        json.put("cube", cubeArrayList);
+
+        return json;
     }
 }

@@ -1,0 +1,14 @@
+{
+    "equipment": [{
+        "Dexterity": 131,
+        "Intelligence": 108,
+        "Luck": 81,
+        "Strength": 125,
+        "Name": "helmet"
+    }],
+    "cube": [{
+        "Str": 3,
+        "Dex": 3,
+        "Int": 3
+    }]
+}
