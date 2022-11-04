@@ -29,7 +29,7 @@ public class JsonWriterTest {
     }
 
     @Test
-    void testWriterEmptyWorkroom() {
+    void testWriterEmptyEquipmentList() {
         try {
             List list = new List();
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyEquipmentList.json");
@@ -52,7 +52,7 @@ public class JsonWriterTest {
 
 
     @Test
-    void testWriterGeneralWorkroom() {
+    void testWriterGeneralEquipmentList() {
         try {
             List list = new List();
             Equipment equipment = new Equipment("helmet");

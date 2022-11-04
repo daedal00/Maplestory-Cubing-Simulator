@@ -23,7 +23,7 @@ public class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderEmptyToDoList() {
+    void testReaderEmptyEquipmentList() {
         JsonReader reader = new JsonReader("./data/testWriterEmptyEquipmentList.json");
         try {
             List list = reader.read();
@@ -34,7 +34,7 @@ public class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderToDoList() {
+    void testReaderEquipmentList() {
         JsonReader reader = new JsonReader("./data/testWriterGeneralEquipmentList.json");
         try {
             List list = reader.read();

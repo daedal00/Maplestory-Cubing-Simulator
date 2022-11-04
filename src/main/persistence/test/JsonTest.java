@@ -11,8 +11,4 @@ public class JsonTest {
     protected void checkEquipmentName(String name, String equipment) {
         assertEquals(name, equipment);
     }
-
-    protected void checkCube(String name, Cubes cube) {
-        assertEquals(name, cube);
-    }
 }

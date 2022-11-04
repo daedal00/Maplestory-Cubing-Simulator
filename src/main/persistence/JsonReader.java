@@ -52,8 +52,8 @@ public class JsonReader {
         return list;
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
+    // MODIFIES: list
+    // EFFECTS: parses equipment and cube from JSON object and adds them to list
     private void addLists(List list, JSONArray jsonArrayEquipment, JSONArray jsonArrayCube) {
         for (Object json : jsonArrayEquipment) {
             JSONObject nextList = (JSONObject) json;
@@ -65,8 +65,8 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // MODIFIES: list
+    // EFFECTS: parses equipment from JSON object and adds it to list
     private void addEquipmentToList(List list, JSONObject jsonObject) {
         int equipmentStrength = jsonObject.getInt("Strength");
         int equipmentLuck = jsonObject.getInt("Luck");
@@ -78,6 +78,8 @@ public class JsonReader {
 
     }
 
+    // MODIFIES: list
+    // EFFECTS: parses cube form JSON object and adds to list
     public void addCubeToList(List list, JSONObject jsonObject) {
         Iterator<String> keys = jsonObject.keys();
         ArrayList<String> cubeName = new ArrayList<>();
