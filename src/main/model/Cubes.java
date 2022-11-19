@@ -6,7 +6,6 @@ import persistence.Writable;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 // Cubes class that stores 3 random cube names and cube values
@@ -87,6 +86,14 @@ public class Cubes {
             System.out.println(cubeNames.get(i));
             System.out.println(cubeValues.get(i) + " %");
         }
+    }
+
+    public String printCubeNameString() {
+        return cubeNames.toString();
+    }
+
+    public String printCubeValueString() {
+        return cubeValues.toString();
     }
 
     // Requires: cube with 3 names and values

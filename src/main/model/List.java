@@ -30,9 +30,19 @@ public class List {
         cubeList.add(cube);
     }
 
+    public void saveCube(Cubes cube, int index) {
+        this.currentCube = cube;
+        cubeList.add(index, cube);
+    }
+
     // Requires: equipment
     // Modifies: equipment List
     // Effects: saves equipment to equipment list arraylist
+    public void saveEquipment(Equipment equipment, int index) {
+        this.currentEquipment = equipment;
+        equipmentList.add(index, equipment);
+    }
+
     public void saveEquipment(Equipment equipment) {
         this.currentEquipment = equipment;
         equipmentList.add(equipment);
@@ -48,7 +58,7 @@ public class List {
     // Effects: prints both equipment list and cube list as one
     public void printList() {
         for (int i = 1; i < equipmentList.size() + 1; i++) {
-            System.out.println(i + "." + currentEquipment.getName());
+            System.out.println(i + "." + this.currentEquipment.getName());
             equipmentList.get(i - 1).printEquipment();
             cubeList.get(i - 1).printCube();
             System.out.println("\n");
@@ -79,6 +89,11 @@ public class List {
         return currentEquipment.getName();
     }
 
+    public String getEquipmentNameIndex(int index) {
+        return equipmentList.get(index).getName();
+    }
+
+
     // Effects: returns equipment at index i in equipment list
     public Equipment getEquipment(int i) {
         return equipmentList.get(i - 1);
@@ -91,7 +106,7 @@ public class List {
     }
 
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns things in this list as a JSON array
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         JSONArray equipList = new JSONArray();

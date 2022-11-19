@@ -9,7 +9,7 @@ public class Equipment {
     private int intelligence;
     private int luck;
     private int dexterity;
-    private final String name;
+    private String name;
 
     public Equipment(String name) {
         int min = 10;
@@ -52,7 +52,7 @@ public class Equipment {
 
     // Effects: returns equipment name
     public String getName() {
-        return name;
+        return this.name;
     }
 
     // Effects: prints equipment dex, strength, int, luk value

@@ -1,14 +1,30 @@
 {
-    "equipment": [{
-        "Dexterity": 38,
-        "Intelligence": 35,
-        "Luck": 138,
-        "Strength": 14,
-        "Name": "helmet"
-    }],
-    "cube": [{
-        "Luk": 3,
-        "Dex": 3,
-        "Int": 3
-    }]
+    "equipment": [
+        {
+            "Dexterity": 107,
+            "Intelligence": 55,
+            "Luck": 34,
+            "Strength": 44,
+            "Name": "head"
+        },
+        {
+            "Dexterity": 139,
+            "Intelligence": 27,
+            "Luck": 46,
+            "Strength": 110,
+            "Name": "shoulder"
+        }
+    ],
+    "cube": [
+        {
+            "Luk": 9,
+            "Dex": 9,
+            "Int": 9
+        },
+        {
+            "Luk": 3,
+            "Dex": 6,
+            "Int": 6
+        }
+    ]
 }
