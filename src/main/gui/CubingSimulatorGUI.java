@@ -15,11 +15,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class CubingSimulatorGUI extends JFrame {
-
-    static JMenuBar mb;
-    static JMenu x;
-    static JMenuItem m1;
-
     private static final String JSON_STORE = "./data/testWriterGeneralEquipmentList.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -82,12 +77,6 @@ public class CubingSimulatorGUI extends JFrame {
     private void displayMenu() {
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopClick());
-
-        mb = new JMenuBar();
-
-        x = new JMenu("Menu");
-
-        m1 = new JMenuItem("MenuItem1");
 
         initMainMenu();
 
