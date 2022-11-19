@@ -24,3 +24,11 @@ About my *cubing simulator*:
 - My visual component is the maplestory logo on a pop up
 - You can load from json by clicking the button on the other pop up
 - You can save your list to a json by clicking the save list button on the main menu
+
+## Sources:
+- https://docs.oracle.com/javase/tutorial/uiswing/events/intro.html
+- https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html
+- https://docs.oracle.com/javase/tutorial/uiswing/examples/zipfiles/components-MenuDemoProject.zip
+- http://www.java2s.com/Tutorial/Java/0260__Swing-Event/ListeningtoJListEventswithaListSelectionListener.htm
+- https://www.javatpoint.com/Displaying-image-in-swing
+- https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#eg
