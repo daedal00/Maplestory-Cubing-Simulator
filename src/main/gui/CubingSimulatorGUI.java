@@ -1,19 +1,31 @@
 package gui;
 
 
-import model.Cubes;
-import model.Equipment;
 import model.List;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class CubingSimulatorGUI extends JFrame {
 
+    static JMenuBar mb;
+    static JMenu x;
+    static JMenuItem m1;
 
+    private static final String JSON_STORE = "./data/testWriterGeneralEquipmentList.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     private JDesktopPane desktop;
     private JInternalFrame mainMenu;
+
 
     private static final int WIDTH = 800;
 
@@ -23,8 +35,10 @@ public class CubingSimulatorGUI extends JFrame {
 
     private JList<List> jlist;
 
-    public CubingSimulatorGUI() {
+    public CubingSimulatorGUI() throws IOException {
         init();
+        loadPopUp();
+        loadPopUp2();
         displayMenu();
 
     }
@@ -32,11 +46,48 @@ public class CubingSimulatorGUI extends JFrame {
     private void init() {
         list = new List();
         jlist = new JList<>();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+    }
+
+
+    private void loadPopUp() {
+        final JFrame parent = new JFrame();
+        JButton button = new JButton();
+
+        button.setText("Click me to load a file!");
+
+        parent.add(button);
+        parent.pack();
+        parent.setVisible(true);
+        setVisible(true);
+        toFront();
+
+        button.addActionListener(evt -> loadFunction());
+    }
+
+    private void loadPopUp2() throws IOException {
+        final JFrame parent = new JFrame();
+
+        BufferedImage myPicture = ImageIO.read(new File("./data/MapleStory.png"));
+        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        parent.add(picLabel);
+        parent.pack();
+        parent.setVisible(true);
+        setVisible(true);
+        toFront();
+
     }
 
     private void displayMenu() {
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopClick());
+
+        mb = new JMenuBar();
+
+        x = new JMenu("Menu");
+
+        m1 = new JMenuItem("MenuItem1");
 
         initMainMenu();
 
@@ -59,18 +110,22 @@ public class CubingSimulatorGUI extends JFrame {
         addMenuOptions();
     }
 
+
     private void addMenuOptions() {
         JPanel menuButtons = new JPanel();
         JButton viewEquipmentButton = new JButton("View/Edit Equipment List");
         JButton editEquipmentButton = new JButton("Edit Equipment Stats");
+        JButton saveList = new JButton("Save list");
         menuButtons.setLayout(new FlowLayout());
         menuButtons.add(viewEquipmentButton);
         menuButtons.add(editEquipmentButton);
+        menuButtons.add(saveList);
         viewEquipmentButton.addActionListener(e -> viewEquipmentList());
         editEquipmentButton.addActionListener(e -> editEquipmentList());
+        saveList.addActionListener(e -> saveFunction());
         mainMenu.add(menuButtons);
-    }
 
+    }
 
     private void viewEquipmentList() {
         //Create and set up the window.
@@ -97,7 +152,7 @@ public class CubingSimulatorGUI extends JFrame {
     }
 
     private void editEquipmentList() {
-    //Create and set up the window.
+        //Create and set up the window.
         JInternalFrame frame = new JInternalFrame("Edit Equipment Stats", false, true,
                 false, false);
         desktop.add(frame);
@@ -117,6 +172,27 @@ public class CubingSimulatorGUI extends JFrame {
                 list = EditEquipment.getList();
             }
         });
+    }
+
+    public void saveFunction() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(list);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(new JFrame(), "Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: if load function is successful, it loads the zoo from the json file to be viewed
+    // else, provides error message
+    private void loadFunction() {
+        try {
+            list = jsonReader.read();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(new JFrame(), "Unable to write to file: " + JSON_STORE);
+        }
     }
 
     private class DesktopClick extends MouseAdapter {

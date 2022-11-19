@@ -2,7 +2,6 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.Writable;
 
 import java.util.ArrayList;
 
@@ -13,10 +12,6 @@ public class List {
     }
 
     private final ArrayList<Equipment> equipmentList = new ArrayList<>();
-
-    public ArrayList<Cubes> getCubeList() {
-        return cubeList;
-    }
 
     private final ArrayList<Cubes> cubeList = new ArrayList<>();
     Cubes currentCube;
@@ -53,6 +48,10 @@ public class List {
     // Effects: removes the equipment at index - 1 in the equipment list
     public void removeEquipment(int i) {
         this.equipmentList.remove(i - 1);
+    }
+
+    public void removeCube(int i) {
+        this.cubeList.remove(i);
     }
 
     // Effects: prints both equipment list and cube list as one

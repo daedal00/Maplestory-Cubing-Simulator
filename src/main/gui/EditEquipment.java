@@ -2,18 +2,20 @@ package gui;
 
 import javax.swing.*;
 
+import model.Cubes;
 import model.Equipment;
 import model.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class EditEquipment extends JPanel {
     public static List getList() {
@@ -25,10 +27,6 @@ public class EditEquipment extends JPanel {
     JTextArea output;
     JList jlist;
     String newline = "\n";
-//    private static final String flameString = "Flame Equipment";
-//    private static final String cubeString = "Cube Equipment";
-//    private final JButton flameButton;
-//    private final JTextField cubeButton;
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public EditEquipment(List mainList) {
@@ -85,17 +83,59 @@ public class EditEquipment extends JPanel {
         bottomHalf.setPreferredSize(new Dimension(450, 135));
         splitPane.add(bottomHalf);
 
-        jlist.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                int index = jlist.getSelectedIndex();
-                outputChanges(index);
-            }
+        jlist.addListSelectionListener(e -> {
+            int index = jlist.getSelectedIndex();
+            outputChangesFlame(index);
+            outputChangesCube(index);
         });
+
+        String flameString = "Flame Equipment";
+        JButton addFlameButton = new JButton(flameString);
+        addFlameButton.setActionCommand(flameString);
+        addFlameButton.addActionListener(new FlameEquipment());
+
+        String cubeString = "Cube Equipment";
+        JButton cubeButton = new JButton(cubeString);
+        cubeButton.setActionCommand(cubeString);
+        cubeButton.addActionListener(new CubeEquipment());
+
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new BoxLayout(buttonPane,
+                BoxLayout.LINE_AXIS));
+        buttonPane.add(cubeButton);
+        buttonPane.add(Box.createHorizontalStrut(5));
+        buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+        buttonPane.add(Box.createHorizontalStrut(5));
+        buttonPane.add(addFlameButton);
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        add(buttonPane, BorderLayout.PAGE_END);
+    }
+
+    class FlameEquipment implements ActionListener {
+        int index = jlist.getSelectedIndex();
+        Equipment tempEquip = list.getEquipment(index + 2);
+
+        public void actionPerformed(ActionEvent e) {
+            tempEquip.rerollFlame();
+            list.replaceEquipment(tempEquip, index + 2);
+            outputChangesFlame(index + 2);
+        }
+    }
+
+    class CubeEquipment implements ActionListener {
+        int index = jlist.getSelectedIndex();
+        Cubes tempCube = list.getCube(index + 2);
+
+        public void actionPerformed(ActionEvent e) {
+            tempCube.rerollCube();
+            list.replaceCube(tempCube, index + 2);
+            outputChangesCube(index + 2);
+        }
+
     }
 
 
-    public void outputChanges(int index) {
+    public void outputChangesFlame(int index) {
         int dexterityInt = list.getEquipment(index + 1).getDexterity();
         String dexterityString = String.valueOf(dexterityInt);
 
@@ -113,6 +153,10 @@ public class EditEquipment extends JPanel {
         output.append("Strength = " + strengthString + "\n");
         output.append("Luck =" + luckString + "\n");
         output.append("Int =" + intelligenceString + "\n");
+
+    }
+
+    private void outputChangesCube(int index) {
         output.append("Cube Names =" + list.getCube(index + 1).printCubeNameString() + "\n");
         output.append("Cube Values =" + list.getCube(index + 1).printCubeValueString() + "\n");
     }

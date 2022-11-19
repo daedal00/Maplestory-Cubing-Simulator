@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 
 public class ViewEquipment extends JPanel implements ListSelectionListener {
     private JList jlist;
-    private DefaultListModel listModel;
+    private final DefaultListModel listModel;
 
     public static List getList() {
         return list;
@@ -78,6 +78,7 @@ public class ViewEquipment extends JPanel implements ListSelectionListener {
             int index = jlist.getSelectedIndex();
             listModel.remove(index);
             list.removeEquipment(index + 1);
+            list.removeCube(index);
 
             int size = listModel.getSize();
 
@@ -98,7 +99,7 @@ public class ViewEquipment extends JPanel implements ListSelectionListener {
     //This listener is shared by the text field and the hire button.
     class AddEquipment implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
-        private JButton button;
+        private final JButton button;
 
         public AddEquipment(JButton button) {
             this.button = button;
