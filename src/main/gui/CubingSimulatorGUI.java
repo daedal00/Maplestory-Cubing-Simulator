@@ -38,7 +38,6 @@ public class CubingSimulatorGUI extends JFrame {
         jsonReader = new JsonReader(JSON_STORE);
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void displayMenu() {
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopClick());
@@ -54,6 +53,10 @@ public class CubingSimulatorGUI extends JFrame {
         mainMenu.setSize(WIDTH / 2, HEIGHT / 2);
         desktop.add(mainMenu);
 
+        imageInit();
+    }
+
+    private void imageInit() {
         ImageIcon icon = new ImageIcon("./data/MapleStory.png");
         int loadList = JOptionPane.showConfirmDialog(null, "Load list?",
                 "Cancel", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
