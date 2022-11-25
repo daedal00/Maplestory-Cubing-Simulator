@@ -95,17 +95,17 @@ public class List {
 
     // Effects: returns equipment at index i in equipment list
     public Equipment getEquipment(int i) {
-        return equipmentList.get(i - 1);
+        return equipmentList.get(i);
     }
 
 
     // Effects: returns cube at index i in cube list
     public Cubes getCube(int i) {
-        return cubeList.get(i - 1);
+        return cubeList.get(i);
     }
 
 
-    // EFFECTS: returns things in this list as a JSON array
+    // EFFECTS: returns equipment and cube stats in this list as a JSON array
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         JSONArray equipList = new JSONArray();
@@ -122,7 +122,7 @@ public class List {
         for (Cubes c : cubeList) {
             JSONObject cube = new JSONObject();
             for (int i = 0; i < 3; i++) {
-                cube.put(c.getCubeNames().get(i), c.getCubeValues().get(i));
+                cube.put((String) c.getCubeNames().get(i), c.getCubeValues().get(i));
             }
             cubeArrayList.put(cube);
         }
@@ -130,5 +130,36 @@ public class List {
         json.put("cube", cubeArrayList);
 
         return json;
+    }
+
+    public void logLoadEvent() {
+        EventLog.getInstance().logEvent(new Event("Loaded List"));
+    }
+
+    public void logSaveEvent() {
+        EventLog.getInstance().logEvent(new Event("Saved List"));
+    }
+
+    public void logAddEquipmentCube() {
+        EventLog.getInstance().logEvent(new Event("Added Equipment and Cube to list"));
+    }
+
+    public void logRemoveEquipmentCube() {
+        EventLog.getInstance().logEvent(new Event("Removed Equipment and Cube from list"));
+    }
+
+    public void logFlameEquipment() {
+        EventLog.getInstance().logEvent(new Event("Flamed Equipment"));
+    }
+
+    public void logRollCube() {
+        EventLog.getInstance().logEvent(new Event("Rerolled Cube"));
+    }
+
+    public void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.println(next.toString());
+        }
+
     }
 }
