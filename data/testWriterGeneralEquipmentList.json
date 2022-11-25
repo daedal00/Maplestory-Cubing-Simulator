@@ -1,4 +1,14 @@
 {
-    "equipment": [],
-    "cube": []
+    "equipment": [{
+        "Dexterity": 45,
+        "Intelligence": 24,
+        "Luck": 31,
+        "Strength": 137,
+        "Name": "a"
+    }],
+    "cube": [{
+        "Luk": 12,
+        "Dex": 12,
+        "Int": 9
+    }]
 }

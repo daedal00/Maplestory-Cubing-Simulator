@@ -9,9 +9,11 @@ import model.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import java.lang.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +28,6 @@ public class EditEquipment extends JPanel {
 
     JTextArea output;
     JList jlist;
-    String newline = "\n";
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public EditEquipment(List mainList) {
@@ -83,11 +84,7 @@ public class EditEquipment extends JPanel {
         bottomHalf.setPreferredSize(new Dimension(450, 135));
         splitPane.add(bottomHalf);
 
-        jlist.addListSelectionListener(e -> {
-            int index = jlist.getSelectedIndex();
-            outputChangesFlame(index);
-            outputChangesCube(index);
-        });
+        jlist.addListSelectionListener(new MyListListener());
 
         String flameString = "Flame Equipment";
         JButton addFlameButton = new JButton(flameString);
@@ -112,40 +109,58 @@ public class EditEquipment extends JPanel {
     }
 
     class FlameEquipment implements ActionListener {
-        int index = jlist.getSelectedIndex();
-        Equipment tempEquip = list.getEquipment(index + 2);
-
         public void actionPerformed(ActionEvent e) {
+            int index = jlist.getSelectedIndex();
+            Equipment tempEquip = list.getEquipment(index);
             tempEquip.rerollFlame();
-            list.replaceEquipment(tempEquip, index + 2);
-            outputChangesFlame(index + 2);
+            list.replaceEquipment(tempEquip, index);
+            output.setText("");
+            outputChangesFlame(index);
+            outputChangesCube(index);
+            list.logFlameEquipment();
         }
     }
 
     class CubeEquipment implements ActionListener {
-        int index = jlist.getSelectedIndex();
-        Cubes tempCube = list.getCube(index + 2);
-
         public void actionPerformed(ActionEvent e) {
+            int index = jlist.getSelectedIndex();
+            Cubes tempCube = list.getCube(index);
             tempCube.rerollCube();
-            list.replaceCube(tempCube, index + 2);
-            outputChangesCube(index + 2);
+            list.replaceCube(tempCube, index);
+            output.setText("");
+            outputChangesFlame(index);
+            outputChangesCube(index);
+            System.out.println(tempCube.getCubeValues().toString());
+            System.out.println(tempCube.getCubeNames().toString());
+            list.logRollCube();
         }
 
     }
 
+    class MyListListener implements ListSelectionListener {
+
+        public void valueChanged(ListSelectionEvent e) {
+            if (!e.getValueIsAdjusting()) {
+                int index = jlist.getSelectedIndex();
+                output.setText("");
+                outputChangesFlame(index);
+                outputChangesCube(index);
+            }
+        }
+    }
+
 
     public void outputChangesFlame(int index) {
-        int dexterityInt = list.getEquipment(index + 1).getDexterity();
+        int dexterityInt = list.getEquipment(index).getDexterity();
         String dexterityString = String.valueOf(dexterityInt);
 
-        int strengthInt = list.getEquipment(index + 1).getStrength();
+        int strengthInt = list.getEquipment(index).getStrength();
         String strengthString = String.valueOf(strengthInt);
 
-        int luckInt = list.getEquipment(index + 1).getDexterity();
+        int luckInt = list.getEquipment(index).getLuck();
         String luckString = String.valueOf(luckInt);
 
-        int intelligenceInt = list.getEquipment(index + 1).getDexterity();
+        int intelligenceInt = list.getEquipment(index).getIntelligence();
         String intelligenceString = String.valueOf(intelligenceInt);
 
         output.append(list.getEquipmentNameIndex(index) + "\n");
@@ -157,8 +172,8 @@ public class EditEquipment extends JPanel {
     }
 
     private void outputChangesCube(int index) {
-        output.append("Cube Names =" + list.getCube(index + 1).printCubeNameString() + "\n");
-        output.append("Cube Values =" + list.getCube(index + 1).printCubeValueString() + "\n");
+        output.append("Cube Names =" + list.getCube(index).getCubeNames().toString() + "\n");
+        output.append("Cube Values =" + list.getCube(index).getCubeValues().toString() + "\n");
     }
 
 }

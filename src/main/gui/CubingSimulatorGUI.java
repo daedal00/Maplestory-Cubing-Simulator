@@ -1,17 +1,15 @@
 package gui;
 
 
+import model.EventLog;
 import model.List;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class CubingSimulatorGUI extends JFrame {
@@ -28,52 +26,19 @@ public class CubingSimulatorGUI extends JFrame {
 
     private List list;
 
-    private JList<List> jlist;
-
-    public CubingSimulatorGUI() throws IOException {
+    public CubingSimulatorGUI() {
         init();
-        loadPopUp();
-        loadPopUp2();
         displayMenu();
 
     }
 
     private void init() {
         list = new List();
-        jlist = new JList<>();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
     }
 
-
-    private void loadPopUp() {
-        final JFrame parent = new JFrame();
-        JButton button = new JButton();
-
-        button.setText("Click me to load a file!");
-
-        parent.add(button);
-        parent.pack();
-        parent.setVisible(true);
-        setVisible(true);
-        toFront();
-
-        button.addActionListener(evt -> loadFunction());
-    }
-
-    private void loadPopUp2() throws IOException {
-        final JFrame parent = new JFrame();
-
-        BufferedImage myPicture = ImageIO.read(new File("./data/MapleStory.png"));
-        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-        parent.add(picLabel);
-        parent.pack();
-        parent.setVisible(true);
-        setVisible(true);
-        toFront();
-
-    }
-
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void displayMenu() {
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopClick());
@@ -89,7 +54,21 @@ public class CubingSimulatorGUI extends JFrame {
         mainMenu.setSize(WIDTH / 2, HEIGHT / 2);
         desktop.add(mainMenu);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon icon = new ImageIcon("./data/MapleStory.png");
+        int loadList = JOptionPane.showConfirmDialog(null, "Load list?",
+                "Cancel", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
+        if (loadList == JOptionPane.YES_OPTION) {
+            loadFunction();
+            list.logLoadEvent();
+        }
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                list.printLog(EventLog.getInstance());
+                System.exit(0);
+            }
+        });
+
         setVisible(true);
     }
 
@@ -123,8 +102,7 @@ public class CubingSimulatorGUI extends JFrame {
         desktop.add(frame);
         frame.toFront();
         //Create and set up the content pane.
-        JComponent newContentPane = new gui.ViewEquipment(jlist, list);
-        list = ViewEquipment.getList();
+        JComponent newContentPane = new gui.ViewEquipment(list);
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 
@@ -168,6 +146,7 @@ public class CubingSimulatorGUI extends JFrame {
             jsonWriter.open();
             jsonWriter.write(list);
             jsonWriter.close();
+            list.logSaveEvent();
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(new JFrame(), "Unable to write to file: " + JSON_STORE);
         }

@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ViewEquipment extends JPanel implements ListSelectionListener {
-    private JList jlist;
+    private final JList jlist;
     private final DefaultListModel listModel;
 
     public static List getList() {
@@ -29,9 +29,8 @@ public class ViewEquipment extends JPanel implements ListSelectionListener {
     private final JTextField equipmentName;
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    public ViewEquipment(JList myList, List mainList) {
+    public ViewEquipment(List mainList) {
         super(new BorderLayout());
-        jlist = myList;
         list = mainList;
         listModel = new DefaultListModel();
         for (Equipment e : list.getEquipmentList()) {
@@ -79,6 +78,7 @@ public class ViewEquipment extends JPanel implements ListSelectionListener {
             listModel.remove(index);
             list.removeEquipment(index + 1);
             list.removeCube(index);
+            list.logRemoveEquipmentCube();
 
             int size = listModel.getSize();
 
@@ -96,7 +96,7 @@ public class ViewEquipment extends JPanel implements ListSelectionListener {
         }
     }
 
-    //This listener is shared by the text field and the hire button.
+    //This listener is shared by the text field and the add equipment button.
     class AddEquipment implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private final JButton button;
@@ -106,6 +106,7 @@ public class ViewEquipment extends JPanel implements ListSelectionListener {
         }
 
 
+        @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
         public void actionPerformed(ActionEvent e) {
             String name = equipmentName.getText();
             Equipment tempEquip = new Equipment(name);
@@ -130,6 +131,7 @@ public class ViewEquipment extends JPanel implements ListSelectionListener {
             listModel.insertElementAt(equipmentName.getText(), index);
             list.saveEquipment(tempEquip, index);
             list.saveCube(tempCube, index);
+            list.logAddEquipmentCube();
 
             equipmentName.requestFocusInWindow();
             equipmentName.setText("");

@@ -1,9 +1,5 @@
 package model;
 
-import org.json.JSONObject;
-import persistence.Writable;
-
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -21,11 +17,11 @@ public class Cubes {
                     9,
                     12));
 
-    public ArrayList<String> getCubeNames() {
+    public ArrayList getCubeNames() {
         return cubeNames;
     }
 
-    private ArrayList<String> cubeNames;
+    private ArrayList cubeNames;
 
     public ArrayList<Integer> getCubeValues() {
         return cubeValues;
@@ -61,16 +57,13 @@ public class Cubes {
     public int getRandomListNumber() {
         Random rand = new Random();
         int upperbound = 4;
-        return rand.nextInt(upperbound - 1);
+        return rand.nextInt(upperbound);
     }
 
-    // Effects: Sets 3 random names from cube names to cube
+    // Effects: Sets 4 random names from cube names to cube
     public void setCubeName() {
-        ArrayList<String> tempNames = defaultCubeNames;
-        tempNames.remove(getRandomListNumber());
-
-        cubeNames = tempNames;
-
+        cubeNames = (ArrayList)defaultCubeNames.clone();
+        cubeNames.remove(getRandomListNumber());
     }
 
     // Effects: sets 3 random values from cube values to cube
@@ -88,34 +81,16 @@ public class Cubes {
         }
     }
 
-    public String printCubeNameString() {
-        return cubeNames.toString();
-    }
-
-    public String printCubeValueString() {
-        return cubeValues.toString();
-    }
-
     // Requires: cube with 3 names and values
     // Modifies: cube
     // Effects: creates and replaces cube object with new randomly generated cube data values
     public void rerollCube() {
-        for (int i = 0; i < 3; i++) {
-            cubeNames.add(defaultCubeNames.get(getRandomListNumber()));
-        }
-        for (int i = 0; i < 3; i++) {
-            cubeValues.add(defaultCubeValues.get(getRandomListNumber()));
-        }
-        removePreviousNames();
+        setCubeName();
+        setCubeValue();
         removePreviousValues();
+
     }
 
-    // Effects: Removes all previous cube names
-    public void removePreviousNames() {
-        cubeNames.remove(0);
-        cubeNames.remove(1);
-        cubeNames.remove(2);
-    }
 
     // Effects: Removes all previous cube values
     public void removePreviousValues() {
@@ -123,6 +98,7 @@ public class Cubes {
         cubeValues.remove(1);
         cubeValues.remove(2);
     }
+
 
 }
 
