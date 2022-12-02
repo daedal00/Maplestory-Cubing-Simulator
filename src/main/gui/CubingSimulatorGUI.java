@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.*;
 
+// Main menu GUI where Edit Equipment and View Equipment can be accessed
 public class CubingSimulatorGUI extends JFrame {
     private static final String JSON_STORE = "./data/testWriterGeneralEquipmentList.json";
     private JsonWriter jsonWriter;
@@ -32,12 +33,20 @@ public class CubingSimulatorGUI extends JFrame {
 
     }
 
+    /* Requires:
+       Modifies: this
+       Effects: initialises equipment/cube lists, writer, reader
+     */
     private void init() {
         list = new List();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
     }
 
+    /* Requires:
+       Modifies: this
+       Effects: Initializes main menu
+     */
     private void displayMenu() {
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopClick());
@@ -53,10 +62,14 @@ public class CubingSimulatorGUI extends JFrame {
         mainMenu.setSize(WIDTH / 2, HEIGHT / 2);
         desktop.add(mainMenu);
 
-        imageInit();
+        loadFileAndImage();
     }
 
-    private void imageInit() {
+    /* Requires:
+       Modifies: displayMenu
+       Effects: creates pop up with load option with image
+     */
+    private void loadFileAndImage() {
         ImageIcon icon = new ImageIcon("./data/MapleStory.png");
         int loadList = JOptionPane.showConfirmDialog(null, "Load list?",
                 "Cancel", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
@@ -75,6 +88,10 @@ public class CubingSimulatorGUI extends JFrame {
         setVisible(true);
     }
 
+    /* Requires:
+       Modifies: displayMenu
+       Effects: creates the main menu
+     */
     private void initMainMenu() {
         mainMenu = new JInternalFrame("Main Menu", false, false, false, false);
         mainMenu.setLayout(new BorderLayout());
@@ -82,6 +99,10 @@ public class CubingSimulatorGUI extends JFrame {
     }
 
 
+    /* Requires:
+       Modifies: displayMenu
+       Effects: adds menu options to main menu
+     */
     private void addMenuOptions() {
         JPanel menuButtons = new JPanel();
         JButton viewEquipmentButton = new JButton("View/Edit Equipment List");
@@ -98,6 +119,10 @@ public class CubingSimulatorGUI extends JFrame {
 
     }
 
+    /* Requires:
+       Modifies: this
+       Effects: creates new pop up within menu frame to view equipment list
+     */
     private void viewEquipmentList() {
         //Create and set up the window.
         JInternalFrame frame = new JInternalFrame("View Equipment", false, true,
@@ -121,6 +146,10 @@ public class CubingSimulatorGUI extends JFrame {
         });
     }
 
+    /* Requires:
+       Modifies: this
+       Effects:  creates pop up within main menu frame to edit equipment list
+     */
     private void editEquipmentList() {
         //Create and set up the window.
         JInternalFrame frame = new JInternalFrame("Edit Equipment Stats", false, true,
@@ -144,6 +173,10 @@ public class CubingSimulatorGUI extends JFrame {
         });
     }
 
+    /* Requires:
+       Modifies: testWriterGeneralEquipmentList.json
+       Effects: saves current list to json file
+     */
     public void saveFunction() {
         try {
             jsonWriter.open();

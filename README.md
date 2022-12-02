@@ -32,3 +32,17 @@ About my *cubing simulator*:
 - http://www.java2s.com/Tutorial/Java/0260__Swing-Event/ListeningtoJListEventswithaListSelectionListener.htm
 - https://www.javatpoint.com/Displaying-image-in-swing
 - https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#eg
+
+## Phase 4: Task 2
+Thu Dec 01 18:06:45 PST 2022\
+Loaded List\
+Thu Dec 01 18:06:51 PST 2022\
+Added Equipment and Cube to list\
+Thu Dec 01 18:06:52 PST 2022 \
+Removed Equipment and Cube from list\
+Thu Dec 01 18:06:55 PST 2022\
+Rerolled Cube\
+Thu Dec 01 18:06:56 PST 2022\
+Flamed Equipment\
+Thu Dec 01 18:06:58 PST 2022\
+Saved List

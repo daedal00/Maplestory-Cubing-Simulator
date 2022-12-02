@@ -13,9 +13,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// View equipment menu class where user can add and remove equipments
 public class ViewEquipment extends JPanel implements ListSelectionListener {
     private final JList jlist;
-    private final DefaultListModel listModel;
+    private DefaultListModel listModel;
 
     public static List getList() {
         return list;
@@ -25,17 +26,16 @@ public class ViewEquipment extends JPanel implements ListSelectionListener {
 
     private static final String addString = "Add Equipment";
     private static final String removeString = "Remove Equipment";
-    private final JButton removeEquipmentButton;
-    private final JTextField equipmentName;
+    private JButton removeEquipmentButton;
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    private JButton addEquipmentButton;
+    private JTextField equipmentName;
+
     public ViewEquipment(List mainList) {
         super(new BorderLayout());
         list = mainList;
-        listModel = new DefaultListModel();
-        for (Equipment e : list.getEquipmentList()) {
-            listModel.addElement(e.getName());
-        }
+        listInit();
+
         jlist = new JList(listModel);
         jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jlist.setSelectedIndex(0);
@@ -43,19 +43,7 @@ public class ViewEquipment extends JPanel implements ListSelectionListener {
         jlist.setVisibleRowCount(5);
         JScrollPane listScrollPane = new JScrollPane(jlist);
 
-        JButton addEquipmentButton = new JButton(addString);
-        AddEquipment addEquipment = new AddEquipment(addEquipmentButton);
-        addEquipmentButton.setActionCommand(addString);
-        addEquipmentButton.addActionListener(addEquipment);
-        addEquipmentButton.setEnabled(false);
-
-        removeEquipmentButton = new JButton(removeString);
-        removeEquipmentButton.setActionCommand(removeString);
-        removeEquipmentButton.addActionListener(new RemoveEquipment());
-
-        equipmentName = new JTextField(10);
-        equipmentName.addActionListener(addEquipment);
-        equipmentName.getDocument().addDocumentListener(addEquipment);
+        buttonInit();
 
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane,
@@ -72,6 +60,39 @@ public class ViewEquipment extends JPanel implements ListSelectionListener {
         add(buttonPane, BorderLayout.PAGE_END);
     }
 
+    /* Requires:
+       Modifies: listModel
+       Effects: creates displayable listModel from list
+     */
+    private void listInit() {
+        listModel = new DefaultListModel();
+        for (Equipment e : list.getEquipmentList()) {
+            listModel.addElement(e.getName());
+        }
+    }
+
+    /* Requires:
+       Modifies: View Equipment Menu
+       Effects: initializes add and remove equipment buttons
+     */
+    private void buttonInit() {
+
+        addEquipmentButton = new JButton(addString);
+        AddEquipment addEquipment = new AddEquipment(addEquipmentButton);
+        addEquipmentButton.setActionCommand(addString);
+        addEquipmentButton.addActionListener(addEquipment);
+        addEquipmentButton.setEnabled(false);
+
+        removeEquipmentButton = new JButton(removeString);
+        removeEquipmentButton.setActionCommand(removeString);
+        removeEquipmentButton.addActionListener(new RemoveEquipment());
+
+        equipmentName = new JTextField(10);
+        equipmentName.addActionListener(addEquipment);
+        equipmentName.getDocument().addDocumentListener(addEquipment);
+    }
+
+    // Remove equipment action listener which removes equipment
     class RemoveEquipment implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             int index = jlist.getSelectedIndex();
@@ -105,16 +126,12 @@ public class ViewEquipment extends JPanel implements ListSelectionListener {
             this.button = button;
         }
 
-
-        @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
         public void actionPerformed(ActionEvent e) {
             String name = equipmentName.getText();
             Equipment tempEquip = new Equipment(name);
             Cubes tempCube = new Cubes();
 
-
             if (name.equals("") || alreadyInList(name)) {
-                Toolkit.getDefaultToolkit().beep();
                 JOptionPane.showMessageDialog(new JFrame(), "Equipment already exists!");
                 equipmentName.requestFocusInWindow();
                 equipmentName.selectAll();
