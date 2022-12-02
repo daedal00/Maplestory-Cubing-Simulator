@@ -46,3 +46,8 @@ Thu Dec 01 18:06:56 PST 2022\
 Flamed Equipment\
 Thu Dec 01 18:06:58 PST 2022\
 Saved List
+
+## Phase 4: Task 3
+There is much refactoring to be worked not seen through the uml design specifically but in the code itself.\
+Though looking at the uml the code is more complex than it needs to be as I could've just had combined\
+equipment and cubes into a single class instead of a class for each and combined into a List class.
